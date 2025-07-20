@@ -1,6 +1,6 @@
 let mood = "neutral";
 const API_KEY =
-  "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"; // Replace with your actual key
+  "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"; 
 
 function setMood(selected) {
   mood = selected;
@@ -62,7 +62,7 @@ async function getOpenRouterReply(userMessage) {
         headers: {
           Authorization: `Bearer ${API_KEY}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost", // Required if using free-tier
+          "HTTP-Referer": "http://localhost", 
           "X-Title": "MindMate Chatbot",
         },
         body: JSON.stringify({
