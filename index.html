@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MindMate</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="script" href="script.js" />
+  </head>
+  <body>
+    <h2>MindMate 💬 – Mental Health Chatbot</h2>
+
+    <div>
+      <strong>Select your mood:</strong><br />
+      <button class="mood-btn" onclick="setMood('happy')">😊 Happy</button>
+      <button class="mood-btn" onclick="setMood('sad')">😢 Sad</button>
+      <button class="mood-btn" onclick="setMood('anxious')">😰 Anxious</button>
+      <button class="mood-btn" onclick="setMood('neutral')">😐 Neutral</button>
+    </div>
+
+    <br />
+    <div id="chat-box"></div>
+    <br />
+    <input id="userInput" placeholder="Type your message..." />
+    <button id="sendBtn" onclick="sendMessage()">Send</button>
+
+    <script src="script.js"></script>
+  </body>
+</html>

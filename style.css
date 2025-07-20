@@ -1,0 +1,141 @@
+/* Background and page layout */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #9fd3c7, #385170);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Chat container title */
+h2 {
+  margin-bottom: 20px;
+}
+
+/* Chat box styling */
+#chat-box {
+  background: #ffffff;
+  color: #333;
+  padding: 15px;
+  height: 300px;
+  width: 100%;
+  max-width: 600px;
+  overflow-y: scroll;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+/* User and bot message bubbles */
+.message {
+  max-width: 80%;
+  margin: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.user {
+  align-self: flex-end;
+  background-color: #f57c00;
+  color: #fff;
+  border-bottom-right-radius: 0;
+}
+
+.bot {
+  align-self: flex-start;
+  background-color: #e0e0e0;
+  color: #000;
+  border-bottom-left-radius: 0;
+}
+
+/* Mood button styles */
+.mood-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mood-btn:hover {
+  background-color: #45a049;
+}
+
+/* Input and send/reset buttons */
+input#userInput {
+  width: 65%;
+  max-width: 400px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+#sendBtn,
+#resetBtn {
+  background-color: #f57c00;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+#sendBtn:hover,
+#resetBtn:hover {
+  background-color: #ef6c00;
+}
+
+/* Typing animation */
+.typing {
+  font-style: italic;
+  color: #999;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  #chat-box {
+    height: 250px;
+    width: 90%;
+  }
+
+  input#userInput {
+    width: 60%;
+    margin-bottom: 10px;
+  }
+
+  #sendBtn,
+  #resetBtn {
+    width: 35%;
+  }
+}
