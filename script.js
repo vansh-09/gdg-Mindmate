@@ -1,40 +1,16 @@
 let mood = "neutral";
-const API_KEY =
-  "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"; 
 
 function setMood(selected) {
   mood = selected;
-  addMessage("You", `Mood selected: ${mood}`, "user");
+  addMessage("You", `Mood selected: ${mood}`);
 }
 
-function addMessage(sender, message, type) {
+function addMessage(sender, message) {
   const chatBox = document.getElementById("chat-box");
-  const msg = document.createElement("div");
-  msg.className = `message ${type}`;
+  const msg = document.createElement("p");
   msg.innerHTML = `<strong>${sender}:</strong> ${message}`;
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function showTyping() {
-  const chatBox = document.getElementById("chat-box");
-  const typingMsg = document.createElement("div");
-  typingMsg.className = "message bot typing";
-  typingMsg.id = "typing";
-  typingMsg.innerText = "MindMate is typing...";
-  chatBox.appendChild(typingMsg);
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function removeTyping() {
-  const typing = document.getElementById("typing");
-  if (typing) typing.remove();
-}
-
-function resetChat() {
-  document.getElementById("chat-box").innerHTML = "";
-  mood = "neutral";
-  addMessage("System", "Chat has been reset. Select your mood again.", "bot");
 }
 
 async function sendMessage() {
@@ -42,54 +18,25 @@ async function sendMessage() {
   const userText = input.value.trim();
   if (!userText) return;
 
-  addMessage("You", userText, "user");
+  addMessage("You", userText);
   input.value = "";
 
-  showTyping();
-  const response = await getOpenRouterReply(userText);
-  removeTyping();
-  addMessage("MindMate", response, "bot");
+  const botResponse = await getMindMateReply(userText);
+  addMessage("MindMate", botResponse);
 }
 
-async function getOpenRouterReply(userMessage) {
-  const prompt = `The user feels ${mood}. Respond empathetically and warmly. Give a calming tip or ask a gentle follow-up.\nUser: "${userMessage}"`;
-
+async function getMindMateReply(userMessage) {
   try {
-    const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost", 
-          "X-Title": "MindMate Chatbot",
-        },
-        body: JSON.stringify({
-          model: "mistralai/mistral-small-3.2-24b-instruct:free",
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are MindMate, a caring mental health companion. Speak with empathy and clarity.",
-            },
-            {
-              role: "user",
-              content: prompt,
-            },
-          ],
-        }),
-      }
-    );
+    const response = await fetch("/.netlify/functions/askGemma", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userMessage, mood })
+    });
 
     const data = await response.json();
-    console.log("OpenRouter response:", data);
-    return (
-      data.choices?.[0]?.message?.content ||
-      "Hmm… MindMate couldn’t respond this time."
-    );
+    return data.reply || "MindMate couldn’t respond this time.";
   } catch (error) {
     console.error("API Error:", error);
-    return "Oops! There was a network or API error.";
+    return "Oops! There was a network or server error.";
   }
 }
